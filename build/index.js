@@ -75,32 +75,82 @@ var ToroPlanet = /** @class */ (function () {
     ToroPlanet.prototype.getPosition = function () {
         return { x: this.x, y: this.y, direction: this.direction };
     };
-    ToroPlanet.MAP_SIZE = 10;
+    ToroPlanet.MAP_SIZE = 10; // Réduit la taille de la carte pour une meilleure visualisation
     return ToroPlanet;
 }());
-// Exemple d'utilisation
-var rover = new ToroPlanet(10, 10, 'N');
-// Ajoutez un écouteur d'événements pour les touches du clavier
-window.addEventListener('keydown', handleKeyDown);
-function handleKeyDown(event) {
-    switch (event.key) {
-        case 'ArrowUp':
-            console.log(rover.moveForward());
-            break;
-        case 'ArrowDown':
-            console.log(rover.moveBackward());
-            break;
-        case 'ArrowLeft':
-            console.log(rover.turnLeft());
-            break;
-        case 'ArrowRight':
-            console.log(rover.turnRight());
-            break;
-        default:
-            // Ignore les autres touches
-            break;
+var RoverComponent = /** @class */ (function () {
+    function RoverComponent() {
+        this.rover = new ToroPlanet(5, 5, 'N');
     }
-}
-console.log(rover.moveForward()); // Output: { x: 10, y: 9, direction: 'N' }
-console.log(rover.turnRight()); // Output: { x: 10, y: 9, direction: 'E' }
-console.log(rover.moveForward()); // Output: { x: 11, y: 9, direction: 'E' }
+    RoverComponent.prototype.createGrid = function () {
+        var gridContainer = document.getElementById('grid');
+        if (gridContainer) {
+            gridContainer.style.gridTemplateColumns = "repeat(".concat(ToroPlanet.MAP_SIZE, ", 1fr)");
+            for (var row = 0; row < ToroPlanet.MAP_SIZE; row++) {
+                for (var col = 0; col < ToroPlanet.MAP_SIZE; col++) {
+                    var cell = document.createElement('div');
+                    cell.className = 'cell';
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+    };
+    RoverComponent.prototype.updateRoverPosition = function () {
+        var gridContainer = document.getElementById('grid');
+        if (gridContainer) {
+            // Réinitialise la classe 'rover' pour toutes les cellules
+            var cells = gridContainer.getElementsByClassName('cell');
+            for (var i = 0; i < cells.length; i++) {
+                cells[i].classList.remove('rover', 'north', 'east', 'south', 'west');
+            }
+            // Ajoute la classe 'rover' à la cellule correspondant à la position du rover
+            var position = this.rover.getPosition();
+            var roverCell = gridContainer.children[position.y * ToroPlanet.MAP_SIZE + position.x];
+            roverCell.classList.add('rover', position.direction.toLowerCase());
+        }
+    };
+    RoverComponent.prototype.updatePositionDisplay = function () {
+        var positionDisplay = document.getElementById('position-display');
+        if (positionDisplay) {
+            var position = this.rover.getPosition();
+            positionDisplay.innerHTML = "Position: x=".concat(position.x, ", y=").concat(position.y, ", direction=").concat(position.direction);
+        }
+    };
+    RoverComponent.prototype.handleKeyDown = function (event) {
+        switch (event.key) {
+            case 'ArrowUp':
+                this.rover.moveForward();
+                break;
+            case 'ArrowDown':
+                this.rover.moveBackward();
+                break;
+            case 'ArrowLeft':
+                this.rover.turnLeft();
+                break;
+            case 'ArrowRight':
+                this.rover.turnRight();
+                break;
+            default:
+                // Ignore les autres touches
+                break;
+        }
+        this.updateRoverPosition();
+        this.updatePositionDisplay();
+    };
+    RoverComponent.prototype.init = function () {
+        var _this = this;
+        this.createGrid();
+        document.addEventListener('keydown', function (event) { return _this.handleKeyDown(event); });
+        var appContainer = document.getElementById('app');
+        if (appContainer) {
+            var positionDisplay = document.createElement('div');
+            positionDisplay.id = 'position-display';
+            appContainer.appendChild(positionDisplay);
+        }
+        this.updateRoverPosition();
+        this.updatePositionDisplay();
+    };
+    return RoverComponent;
+}());
+var roverApp = new RoverComponent();
+roverApp.init();

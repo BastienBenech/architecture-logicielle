@@ -13,7 +13,7 @@ interface Planet {
 }
 
 class ToroPlanet implements Planet {
-  static MAP_SIZE = 10;
+  static MAP_SIZE = 10; // Réduit la taille de la carte pour une meilleure visualisation
 
   private x: number;
   private y: number;
@@ -106,32 +106,90 @@ class ToroPlanet implements Planet {
   }
 }
 
-// Exemple d'utilisation
-const rover: Planet = new ToroPlanet(10, 10, 'N');
+class RoverComponent {
+  private rover: Planet;
 
-// Ajoutez un écouteur d'événements pour les touches du clavier
-window.addEventListener('keydown', handleKeyDown);
+  constructor() {
+    this.rover = new ToroPlanet(5, 5, 'N');
+  }
 
-function handleKeyDown(event: KeyboardEvent) {
-  switch (event.key) {
-    case 'ArrowUp':
-      console.log(rover.moveForward());
-      break;
-    case 'ArrowDown':
-      console.log(rover.moveBackward());
-      break;
-    case 'ArrowLeft':
-      console.log(rover.turnLeft());
-      break;
-    case 'ArrowRight':
-      console.log(rover.turnRight());
-      break;
-    default:
-      // Ignore les autres touches
-      break;
+  private createGrid() {
+    const gridContainer = document.getElementById('grid');
+    if (gridContainer) {
+      gridContainer.style.gridTemplateColumns = `repeat(${ToroPlanet.MAP_SIZE}, 1fr)`;
+      for (let row = 0; row < ToroPlanet.MAP_SIZE; row++) {
+        for (let col = 0; col < ToroPlanet.MAP_SIZE; col++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          gridContainer.appendChild(cell);
+        }
+      }
+    }
+  }
+
+  private updateRoverPosition() {
+    const gridContainer = document.getElementById('grid');
+    if (gridContainer) {
+      // Réinitialise la classe 'rover' pour toutes les cellules
+      const cells = gridContainer.getElementsByClassName('cell');
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].classList.remove('rover', 'north', 'east', 'south', 'west');
+      }
+
+      // Ajoute la classe 'rover' à la cellule correspondant à la position du rover
+      const position = this.rover.getPosition();
+      const roverCell = gridContainer.children[position.y * ToroPlanet.MAP_SIZE + position.x];
+      roverCell.classList.add('rover', position.direction.toLowerCase());
+    }
+  }
+
+  private updatePositionDisplay() {
+    const positionDisplay = document.getElementById('position-display');
+    if (positionDisplay) {
+      const position = this.rover.getPosition();
+      positionDisplay.innerHTML = `Position: x=${position.x}, y=${position.y}, direction=${position.direction}`;
+    }
+  }
+
+  private handleKeyDown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowUp':
+        this.rover.moveForward();
+        break;
+      case 'ArrowDown':
+        this.rover.moveBackward();
+        break;
+      case 'ArrowLeft':
+        this.rover.turnLeft();
+        break;
+      case 'ArrowRight':
+        this.rover.turnRight();
+        break;
+      default:
+        // Ignore les autres touches
+        break;
+    }
+
+    this.updateRoverPosition();
+    this.updatePositionDisplay();
+  }
+
+  public init() {
+    this.createGrid();
+
+    document.addEventListener('keydown', (event) => this.handleKeyDown(event));
+
+    const appContainer = document.getElementById('app');
+    if (appContainer) {
+      const positionDisplay = document.createElement('div');
+      positionDisplay.id = 'position-display';
+      appContainer.appendChild(positionDisplay);
+    }
+
+    this.updateRoverPosition();
+    this.updatePositionDisplay();
   }
 }
 
-console.log(rover.moveForward()); // Output: { x: 10, y: 9, direction: 'N' }
-console.log(rover.turnRight());   // Output: { x: 10, y: 9, direction: 'E' }
-console.log(rover.moveForward()); // Output: { x: 11, y: 9, direction: 'E' }
+const roverApp = new RoverComponent();
+roverApp.init();
