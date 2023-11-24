@@ -1,11 +1,15 @@
+import { Playground } from "./playground";
+
 export class Rover {
   x: number;
   y: number;
   direction: string;
-  constructor() {
+  playground: Playground;
+  constructor(playground: Playground) {
     this.x = 0;
     this.y = 0;
     this.direction = "N";
+    this.playground = playground;
   }
 
   logRoverState(): void {
@@ -22,6 +26,7 @@ export class Rover {
     } else if (command === "M") {
       this.moveForward();
     }
+    this.playground.printGrid(this.x, this.y);
   }
 
   turnLeft(): void {

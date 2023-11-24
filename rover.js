@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rover = void 0;
 var Rover = /** @class */ (function () {
-    function Rover() {
+    function Rover(playground) {
         this.x = 0;
         this.y = 0;
         this.direction = "N";
+        this.playground = playground;
     }
     Rover.prototype.logRoverState = function () {
         console.log("Rover is at position ".concat(this.x, ", ").concat(this.y, " facing ").concat(this.direction));
@@ -20,6 +21,7 @@ var Rover = /** @class */ (function () {
         else if (command === "M") {
             this.moveForward();
         }
+        this.playground.printGrid(this.x, this.y);
     };
     Rover.prototype.turnLeft = function () {
         if (this.direction === "N") {
