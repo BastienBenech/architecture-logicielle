@@ -1,17 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Rover = void 0;
-var Rover = /** @class */ (function () {
-    function Rover(playground) {
+export class Rover {
+    constructor(playground) {
         this.x = 0;
         this.y = 0;
         this.direction = "N";
         this.playground = playground;
     }
-    Rover.prototype.logRoverState = function () {
-        console.log("Rover is at position ".concat(this.x, ", ").concat(this.y, " facing ").concat(this.direction));
-    };
-    Rover.prototype.move = function (command) {
+    logRoverState() {
+        console.log(`Rover is at position ${this.x}, ${this.y} facing ${this.direction}`);
+    }
+    move(command) {
         if (command === "L") {
             this.turnLeft();
         }
@@ -22,8 +19,8 @@ var Rover = /** @class */ (function () {
             this.moveForward();
         }
         this.playground.printGrid(this.x, this.y);
-    };
-    Rover.prototype.turnLeft = function () {
+    }
+    turnLeft() {
         if (this.direction === "N") {
             this.direction = "W";
         }
@@ -37,8 +34,8 @@ var Rover = /** @class */ (function () {
             this.direction = "N";
         }
         this.logRoverState();
-    };
-    Rover.prototype.turnRight = function () {
+    }
+    turnRight() {
         if (this.direction === "N") {
             this.direction = "E";
         }
@@ -52,8 +49,8 @@ var Rover = /** @class */ (function () {
             this.direction = "N";
         }
         this.logRoverState();
-    };
-    Rover.prototype.moveForward = function () {
+    }
+    moveForward() {
         if (this.direction === "N") {
             this.y += 1;
         }
@@ -67,7 +64,5 @@ var Rover = /** @class */ (function () {
             this.x -= 1;
         }
         this.logRoverState();
-    };
-    return Rover;
-}());
-exports.Rover = Rover;
+    }
+}
