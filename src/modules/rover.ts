@@ -66,6 +66,21 @@ export class Rover {
     //this.playground.printGrid(this.x, this.y);
   }
 
+  handleRoverDisplay(): void {
+    const rover = document.createElement("img");
+    rover.setAttribute("id", "rover");
+    rover.setAttribute("src", "https://i.imgur.com/9Z6Z4Yt.png");
+    const selectedRowNode = document.querySelector("#row_0");
+    const selectedCellNode = document.querySelector("#cell_0");
+    selectedRowNode?.appendChild(rover);
+    /* innerHTML = `
+      <img
+        id="rover"
+        src="https://cdn-icons-png.flaticon.com/512/1/1122.png"
+        alt=""
+      />`; */
+  }
+
   turnLeft(): void {
     if (this.direction === "N") {
       this.direction = "W";
