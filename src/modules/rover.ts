@@ -8,7 +8,7 @@ export class Rover {
   constructor(playground: Playground) {
     this.x = 0;
     this.y = 0;
-    this.direction = "N";
+    this.direction = "E";
     this.playground = playground;
   }
 
@@ -21,18 +21,47 @@ export class Rover {
   move(command: KeyboardEvent): void {
     console.log(`${command.key} key was pressed`);
     if (command.key === "ArrowLeft" || command.key.toUpperCase() === "Q") {
-      this.turnLeft();
+      if (this.direction === "W") {
+        console.log("move forward to the West");
+        this.x -= 1;
+      } else {
+        this.direction = "W";
+        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
+          "rotate(180deg)";
+      }
     } else if (
       command.key === "ArrowRight" ||
       command.key.toUpperCase() === "D"
     ) {
-      this.turnRight();
+      if (this.direction === "E") {
+        console.log("move forward to the East");
+        this.x += 1;
+      } else {
+        this.direction = "E";
+        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
+          "rotate(0deg)";
+      }
+    } else if (command.key === "ArrowUp" || command.key.toUpperCase() === "Z") {
+      if (this.direction === "N") {
+        console.log("move forward to the North");
+        this.y -= 1;
+      } else {
+        this.direction = "N";
+        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
+          "rotate(-90deg)";
+      }
     } else if (
-      command.key === "ArrowUp" ||
-      command.key.toUpperCase() === "Z" ||
-      command.key === "Enter"
+      command.key === "ArrowDown" ||
+      command.key.toUpperCase() === "S"
     ) {
-      this.moveForward();
+      if (this.direction === "S") {
+        console.log("move forward to the South");
+        this.y += 1;
+      } else {
+        this.direction = "S";
+        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
+          "rotate(90deg)";
+      }
     }
     //this.playground.printGrid(this.x, this.y);
   }
@@ -47,8 +76,6 @@ export class Rover {
     } else if (this.direction === "E") {
       this.direction = "N";
     }
-    document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-      "rotate(180deg)";
     this.logRoverState();
   }
 
@@ -62,8 +89,6 @@ export class Rover {
     } else if (this.direction === "W") {
       this.direction = "N";
     }
-    document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-      "rotate(0deg)";
     this.logRoverState();
   }
 
