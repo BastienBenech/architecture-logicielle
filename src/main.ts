@@ -18,6 +18,10 @@ export class App {
       "Enter a command : L (turn on left), R (turn on right), M (move forward)"
     );
     this.playground.printGrid();
+    window.addEventListener("keydown", (event) => {
+      event.preventDefault();
+      this.rover.move(event);
+    });
   }
 }
 

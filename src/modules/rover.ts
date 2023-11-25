@@ -18,12 +18,20 @@ export class Rover {
     );
   }
 
-  move(command: string): void {
-    if (command === "L") {
+  move(command: KeyboardEvent): void {
+    console.log(`${command.key} key was pressed`);
+    if (command.key === "ArrowLeft" || command.key.toUpperCase() === "Q") {
       this.turnLeft();
-    } else if (command === "R") {
+    } else if (
+      command.key === "ArrowRight" ||
+      command.key.toUpperCase() === "D"
+    ) {
       this.turnRight();
-    } else if (command === "M") {
+    } else if (
+      command.key === "ArrowUp" ||
+      command.key.toUpperCase() === "Z" ||
+      command.key === "Enter"
+    ) {
       this.moveForward();
     }
     //this.playground.printGrid(this.x, this.y);
@@ -39,6 +47,8 @@ export class Rover {
     } else if (this.direction === "E") {
       this.direction = "N";
     }
+    document.querySelector<HTMLImageElement>("#rover")!.style.transform =
+      "rotate(180deg)";
     this.logRoverState();
   }
 
@@ -52,6 +62,8 @@ export class Rover {
     } else if (this.direction === "W") {
       this.direction = "N";
     }
+    document.querySelector<HTMLImageElement>("#rover")!.style.transform =
+      "rotate(0deg)";
     this.logRoverState();
   }
 
