@@ -26,7 +26,7 @@ export class Rover {
     } else if (command === "M") {
       this.moveForward();
     }
-    this.playground.printGrid(this.x, this.y);
+    //this.playground.printGrid(this.x, this.y);
   }
 
   turnLeft(): void {

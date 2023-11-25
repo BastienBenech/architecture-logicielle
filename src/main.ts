@@ -17,11 +17,7 @@ export class App {
     console.log(
       "Enter a command : L (turn on left), R (turn on right), M (move forward)"
     );
-    this.playground.printGrid(this.rover.x, this.rover.y);
-    process.openStdin().addListener("data", (input) => {
-      const command = input.toString().trim();
-      this.rover.move(command);
-    });
+    this.playground.printGrid();
   }
 }
 
