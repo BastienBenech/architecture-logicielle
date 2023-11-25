@@ -10,16 +10,18 @@ export class Playground {
   }
 
   printRover(x: number, y: number): void {
-    const rover = document.createElement("img");
-    if (document.querySelector("#rover") !== null) {
-      document.querySelector("#rover")?.remove();
+    const newRover = document.createElement("img");
+    const oldRover = document.querySelector<HTMLImageElement>("#rover");
+    if (oldRover !== null) {
+      oldRover.remove();
+      newRover.style.transform = oldRover.style.transform;
     }
-    rover.setAttribute("id", "rover");
-    rover.setAttribute(
+    newRover.setAttribute("id", "rover");
+    newRover.setAttribute(
       "src",
       "https://cdn-icons-png.flaticon.com/512/1/1122.png"
     );
-    document.querySelector(`#row_${y}-col_${x}`)?.appendChild(rover);
+    document.querySelector(`#row_${y}-col_${x}`)?.appendChild(newRover);
   }
 
   printGrid(): void {
