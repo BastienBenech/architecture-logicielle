@@ -18,7 +18,7 @@ export class App {
       "Enter a command : L (turn on left), R (turn on right), M (move forward)"
     );
     this.playground.printGrid();
-    this.playground.printRover();
+    this.playground.printRover(0, 0);
     window.addEventListener("keydown", (event) => {
       event.preventDefault();
       this.rover.move(event);

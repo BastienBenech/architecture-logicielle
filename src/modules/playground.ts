@@ -9,14 +9,17 @@ export class Playground {
     this.height = height;
   }
 
-  printRover(): void {
+  printRover(x: number, y: number): void {
     const rover = document.createElement("img");
+    if (document.querySelector("#rover") !== null) {
+      document.querySelector("#rover")?.remove();
+    }
     rover.setAttribute("id", "rover");
     rover.setAttribute(
       "src",
       "https://cdn-icons-png.flaticon.com/512/1/1122.png"
     );
-    document.querySelector("#row_0-col_0")?.appendChild(rover);
+    document.querySelector(`#row_${y}-col_${x}`)?.appendChild(rover);
   }
 
   printGrid(): void {

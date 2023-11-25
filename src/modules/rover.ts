@@ -24,6 +24,7 @@ export class Rover {
       if (this.direction === "W") {
         console.log("move forward to the West");
         this.x -= 1;
+        this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "W";
         document.querySelector<HTMLImageElement>("#rover")!.style.transform =
@@ -36,6 +37,7 @@ export class Rover {
       if (this.direction === "E") {
         console.log("move forward to the East");
         this.x += 1;
+        this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "E";
         document.querySelector<HTMLImageElement>("#rover")!.style.transform =
@@ -45,6 +47,7 @@ export class Rover {
       if (this.direction === "N") {
         console.log("move forward to the North");
         this.y -= 1;
+        this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "N";
         document.querySelector<HTMLImageElement>("#rover")!.style.transform =
@@ -57,6 +60,7 @@ export class Rover {
       if (this.direction === "S") {
         console.log("move forward to the South");
         this.y += 1;
+        this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "S";
         document.querySelector<HTMLImageElement>("#rover")!.style.transform =
@@ -64,21 +68,6 @@ export class Rover {
       }
     }
     //this.playground.printGrid(this.x, this.y);
-  }
-
-  handleRoverDisplay(): void {
-    const rover = document.createElement("img");
-    rover.setAttribute("id", "rover");
-    rover.setAttribute("src", "https://i.imgur.com/9Z6Z4Yt.png");
-    const selectedRowNode = document.querySelector("#row_0");
-    const selectedCellNode = document.querySelector("#cell_0");
-    selectedRowNode?.appendChild(rover);
-    /* innerHTML = `
-      <img
-        id="rover"
-        src="https://cdn-icons-png.flaticon.com/512/1/1122.png"
-        alt=""
-      />`; */
   }
 
   turnLeft(): void {
