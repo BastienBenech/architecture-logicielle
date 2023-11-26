@@ -23,7 +23,11 @@ export class Rover {
     if (command.key === "ArrowLeft" || command.key.toUpperCase() === "Q") {
       if (this.direction === "W") {
         console.log("move forward to the West");
-        this.x -= 1;
+        if (this.x - 1 === -1) {
+          this.x = this.playground.width - 1;
+        } else {
+          this.x -= 1;
+        }
         this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "W";
@@ -36,7 +40,11 @@ export class Rover {
     ) {
       if (this.direction === "E") {
         console.log("move forward to the East");
-        this.x += 1;
+        if (this.x + 1 === this.playground.width) {
+          this.x = 0;
+        } else {
+          this.x += 1;
+        }
         this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "E";
@@ -46,7 +54,11 @@ export class Rover {
     } else if (command.key === "ArrowUp" || command.key.toUpperCase() === "Z") {
       if (this.direction === "N") {
         console.log("move forward to the North");
-        this.y -= 1;
+        if (this.y - 1 === -1) {
+          this.y = this.playground.height - 1;
+        } else {
+          this.y -= 1;
+        }
         this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "N";
@@ -59,7 +71,11 @@ export class Rover {
     ) {
       if (this.direction === "S") {
         console.log("move forward to the South");
-        this.y += 1;
+        if (this.y + 1 === this.playground.height) {
+          this.y = 0;
+        } else {
+          this.y += 1;
+        }
         this.playground.printRover(this.x, this.y);
       } else {
         this.direction = "S";
@@ -67,7 +83,6 @@ export class Rover {
           "rotate(90deg)";
       }
     }
-    //this.playground.printGrid(this.x, this.y);
   }
 
   turnLeft(): void {
