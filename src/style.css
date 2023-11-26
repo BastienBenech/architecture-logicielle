@@ -4,6 +4,16 @@
     background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2022/08/holden_basin_on_mars/24419463-1-eng-GB/Holden_Basin_on_Mars_pillars.jpg") no-repeat;
 }
 
+.row-index {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 100px;
+    background: bisque;
+}
+
 html {
     height: 100vh;
     background-color: bisque;

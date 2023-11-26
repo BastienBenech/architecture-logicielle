@@ -41,6 +41,15 @@ export class Playground {
       );
       if (selectedRow !== undefined) {
         for (let j = 0; j < this.width; j++) {
+          if (j === 0) {
+            const rowIndexCell = document.createElement("div");
+            rowIndexCell.setAttribute("id", `row_${i.toString()}_index`);
+            rowIndexCell.setAttribute("class", "row-index");
+            rowIndexCell!.innerText = i.toString();
+            if (selectedRow !== undefined) {
+              selectedRow!.innerHTML += rowIndexCell.outerHTML;
+            }
+          }
           var cell = document.createElement("div");
           cell.setAttribute("id", `row_${i}-col_${j.toString()}`);
           cell.setAttribute("class", "cell");
