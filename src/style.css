@@ -1,7 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 #grid {
     width: fit-content;
     height: fit-content;
     background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2022/08/holden_basin_on_mars/24419463-1-eng-GB/Holden_Basin_on_Mars_pillars.jpg") no-repeat;
+    background-size: cover;
 }
 
 .row-index {
@@ -12,6 +19,24 @@
     width: 22px;
     height: 100px;
     background: bisque;
+}
+
+row_-1 {
+    padding-left: 22px;
+}
+
+.col-index {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    height: 22px;
+    background: bisque;
+}
+
+row_-1 {
+    margin-left: 22px;
 }
 
 html {

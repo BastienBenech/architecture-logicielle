@@ -28,7 +28,7 @@ export class Playground {
     document.querySelector<HTMLDivElement>("#app")!.innerHTML += `
     `;
     const grid = document.querySelector<HTMLDivElement>("#grid");
-    for (let i = 0; i < this.height; i++) {
+    for (let i = -1; i < this.height; i++) {
       const row = document.createElement("div");
       row.setAttribute("id", `row_${i.toString()}`);
       row.setAttribute("class", "row");
@@ -41,7 +41,7 @@ export class Playground {
       );
       if (selectedRow !== undefined) {
         for (let j = 0; j < this.width; j++) {
-          if (j === 0) {
+          if (j === 0 && i !== -1) {
             const rowIndexCell = document.createElement("div");
             rowIndexCell.setAttribute("id", `row_${i.toString()}_index`);
             rowIndexCell.setAttribute("class", "row-index");
@@ -50,10 +50,19 @@ export class Playground {
               selectedRow!.innerHTML += rowIndexCell.outerHTML;
             }
           }
-          var cell = document.createElement("div");
-          cell.setAttribute("id", `row_${i}-col_${j.toString()}`);
-          cell.setAttribute("class", "cell");
-          selectedRow!.innerHTML += cell.outerHTML;
+          if (i === -1) {
+            const colIndexCell = document.createElement("div");
+            colIndexCell.setAttribute("id", `col_${j.toString()}_index`);
+            colIndexCell.setAttribute("class", "col-index");
+            colIndexCell!.innerText = j.toString();
+
+            selectedRow!.innerHTML += colIndexCell.outerHTML;
+          } else {
+            var cell = document.createElement("div");
+            cell.setAttribute("id", `row_${i}-col_${j.toString()}`);
+            cell.setAttribute("class", "cell");
+            selectedRow!.innerHTML += cell.outerHTML;
+          }
         }
       }
     }
