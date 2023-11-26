@@ -8,7 +8,7 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "outDir": "./src/dist",
     "rootDir": "./src",
     /* Bundler mode */
