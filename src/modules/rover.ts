@@ -48,13 +48,25 @@ export class Rover {
   }
 
   move(command: KeyboardEvent): void {
-    if (this.direction === "W" && command.key === "ArrowRight") {
+    if (
+      this.direction === "W" &&
+      (command.key === "ArrowRight" || command.key.toUpperCase() === "D")
+    ) {
       this.moveBackward("W");
-    } else if (this.direction === "E" && command.key === "ArrowLeft") {
+    } else if (
+      this.direction === "E" &&
+      (command.key === "ArrowLeft" || command.key.toUpperCase() === "Q")
+    ) {
       this.moveBackward("E");
-    } else if (this.direction === "N" && command.key === "ArrowDown") {
+    } else if (
+      this.direction === "N" &&
+      (command.key === "ArrowDown" || command.key.toUpperCase() === "S")
+    ) {
       this.moveBackward("N");
-    } else if (this.direction === "S" && command.key === "ArrowUp") {
+    } else if (
+      this.direction === "S" &&
+      (command.key === "ArrowUp" || command.key.toUpperCase() === "Z")
+    ) {
       this.moveBackward("S");
     } else {
       this.moveForward(command);
