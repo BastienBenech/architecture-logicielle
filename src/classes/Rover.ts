@@ -7,83 +7,55 @@ export class Rover {
   private position: Position;
   private planete: Planete;
 
+  private directionsForward = {
+    'N': { x: 0, y: -1 },
+    'E': { x: 1, y: 0 },
+    'S': { x: 0, y: 1 },
+    'W': { x: -1, y: 0 }
+  };
+
+  private directionsBackward = {
+    'N': { x: 0, y: 1 },
+    'E': { x: -1, y: 0 },
+    'S': { x: 0, y: -1 },
+    'W': { x: 1, y: 0 }
+  };
+
+  private directionsLeft = {
+    'N': DirectionEnum.OUEST,
+    'E': DirectionEnum.NORD,
+    'S': DirectionEnum.EST,
+    'W': DirectionEnum.SUD
+  };
+
+  private directionsRight = {
+    'N': DirectionEnum.EST,
+    'E': DirectionEnum.SUD,
+    'S': DirectionEnum.OUEST,
+    'W': DirectionEnum.NORD
+  };
+
   constructor(position: Position, planete: Planete) {
     this.position = position;
     this.planete = planete;
   }
 
-  public moveForward(): Position {
-    switch (this.position.direction) {
-      case 'N':
-        this.position.y = (this.position.y - 1 + this.planete.getSize()) % this.planete.getSize();
-        break;
-      case 'E':
-        this.position.x = (this.position.x + 1) % this.planete.getSize();
-        break;
-      case 'S':
-        this.position.y = (this.position.y + 1) % this.planete.getSize();
-        break;
-      case 'W':
-        this.position.x = (this.position.x - 1 + this.planete.getSize()) % this.planete.getSize();
-        break;
-    }
+  public move(keyUp: string) {
+    const direction = keyUp === "ArrowUp"
+        ? this.directionsForward[this.position.direction]
+        : this.directionsBackward[this.position.direction]
+
+    this.position.x = (this.position.x + direction.x + this.planete.getSize()) % this.planete.getSize();
+    this.position.y = (this.position.y + direction.y + this.planete.getSize()) % this.planete.getSize();
 
     return this.getPosition();
   }
 
-  public moveBackward(): Position {
-    switch (this.position.direction) {
-      case 'N':
-        this.position.y = (this.position.y + 1) % this.planete.getSize();
-        break;
-      case 'E':
-        this.position.x = (this.position.x - 1 + this.planete.getSize()) % this.planete.getSize();
-        break;
-      case 'S':
-        this.position.y = (this.position.y - 1 + this.planete.getSize()) % this.planete.getSize();
-        break;
-      case 'W':
-        this.position.x = (this.position.x + 1) % this.planete.getSize();
-        break;
-    }
+  public turn(keyUp: string) {
 
-    return this.getPosition();
-  }
-
-  public turnLeft(): Position {
-    switch (this.position.direction) {
-      case 'N':
-        this.position.direction = DirectionEnum.OUEST;
-        break;
-      case 'E':
-        this.position.direction = DirectionEnum.NORD;
-        break;
-      case 'S':
-        this.position.direction = DirectionEnum.EST;
-        break;
-      case 'W':
-        this.position.direction = DirectionEnum.SUD;
-        break;
-    }
-
-    return this.getPosition();
-  }
-
-  public turnRight(): Position {
-    switch (this.position.direction) {
-      case 'N':
-        this.position.direction = DirectionEnum.EST;
-        break;
-      case 'E':
-        this.position.direction = DirectionEnum.SUD;
-        break;
-      case 'S':
-        this.position.direction = DirectionEnum.OUEST;
-        break;
-      case 'W':
-        this.position.direction = DirectionEnum.NORD;
-        break;
-    }
+    keyUp === "ArrowLeft"
+      ? this.position.direction = this.directionsLeft[this.position.direction]
+      : this.position.direction = this.directionsRight[this.position.direction]
 
     return this.getPosition();
   }

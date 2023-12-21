@@ -11,7 +11,7 @@ describe('Un Rover sort d\'un côté de la map et revient du côté opposé', ()
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveForward();
+    rover.move("ArrowUp");
 
     expect(rover.getPosition().x).toBe(5);
     expect(rover.getPosition().y).toBe(9);
@@ -25,7 +25,7 @@ describe('Un Rover sort d\'un côté de la map et revient du côté opposé', ()
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveForward();
+    rover.move("ArrowUp");
 
     expect(rover.getPosition().x).toBe(0);
     expect(rover.getPosition().y).toBe(5);
@@ -39,7 +39,7 @@ describe('Un Rover sort d\'un côté de la map et revient du côté opposé', ()
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveForward();
+    rover.move("ArrowUp");
 
     expect(rover.getPosition().x).toBe(5);
     expect(rover.getPosition().y).toBe(0);
@@ -53,7 +53,7 @@ describe('Un Rover sort d\'un côté de la map et revient du côté opposé', ()
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveForward();
+    rover.move("ArrowUp");
 
     expect(rover.getPosition().x).toBe(9);
     expect(rover.getPosition().y).toBe(5);

@@ -11,7 +11,7 @@ describe('Un Rover peut reculer', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveBackward();
+    rover.move("ArrowDown");
 
     expect(rover.getPosition().x).toBe(5);
     expect(rover.getPosition().y).toBe(6);
@@ -25,7 +25,7 @@ describe('Un Rover peut reculer', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveBackward();
+    rover.move("ArrowDown");
 
     expect(rover.getPosition().x).toBe(5);
     expect(rover.getPosition().y).toBe(4);
@@ -39,7 +39,7 @@ describe('Un Rover peut reculer', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveBackward();
+    rover.move("ArrowDown");
 
     expect(rover.getPosition().x).toBe(4);
     expect(rover.getPosition().y).toBe(5);
@@ -53,7 +53,7 @@ describe('Un Rover peut reculer', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.moveBackward();
+    rover.move("ArrowDown");
 
     expect(rover.getPosition().x).toBe(6);
     expect(rover.getPosition().y).toBe(5);

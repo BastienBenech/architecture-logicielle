@@ -11,7 +11,7 @@ describe('Un Rover peut tourner à gauche', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.turnLeft();
+    rover.turn("ArrowLeft");
 
     expect(rover.getPosition().direction).toBe("W");
     expect(rover.getPosition().x).toBe(5);
@@ -25,7 +25,7 @@ describe('Un Rover peut tourner à gauche', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.turnLeft();
+    rover.turn("ArrowLeft");
 
     expect(rover.getPosition().direction).toBe("S");
     expect(rover.getPosition().x).toBe(5);
@@ -39,7 +39,7 @@ describe('Un Rover peut tourner à gauche', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.turnLeft();
+    rover.turn("ArrowLeft");
 
     expect(rover.getPosition().direction).toBe("E");
     expect(rover.getPosition().x).toBe(5);
@@ -53,7 +53,7 @@ describe('Un Rover peut tourner à gauche', () => {
     let planete = new Planete(10);
     let rover = new Rover(position, planete);
 
-    rover.turnLeft();
+    rover.turn("ArrowLeft");
 
     expect(rover.getPosition().direction).toBe("N");
     expect(rover.getPosition().x).toBe(5);

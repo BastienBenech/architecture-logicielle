@@ -96,28 +96,12 @@ export class App {
     }
 
     private handleKeyDown(event: KeyboardEvent) {
-        console.log(this.rover.getPosition());
-        switch (event.key) {
-            case 'ArrowUp':
-                this.rover.moveForward();
-                this.printRover(this.rover);
-                break;
-            case 'ArrowDown':
-                this.rover.moveBackward();
-                this.printRover(this.rover);
-                break;
-            case 'ArrowLeft':
-                this.rover.turnLeft();
-                this.printRover(this.rover);
-                break;
-            case 'ArrowRight':
-                this.rover.turnRight();
-                this.printRover(this.rover);
-                break;
-            default:
-                // Ignore les autres touches
-                break;
-        }
+        if (event.key === "ArrowUp" || event.key === "ArrowDown")
+            this.rover.move(event.key)
+        else if (event.key === "ArrowLeft" || event.key === "ArrowRight")
+            this.rover.turn(event.key)
+
+        this.printRover(this.rover);
     }
 
 }
