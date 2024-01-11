@@ -96,11 +96,7 @@ export class App {
     }
 
     private handleKeyDown(event: KeyboardEvent) {
-        if (event.key === "ArrowUp" || event.key === "ArrowDown")
-            this.rover.move(event.key)
-        else if (event.key === "ArrowLeft" || event.key === "ArrowRight")
-            this.rover.turn(event.key)
-
+        this.rover.checkInputKey(event.key);
         this.printRover(this.rover);
     }
 
