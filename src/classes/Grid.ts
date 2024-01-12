@@ -14,20 +14,16 @@ export class Grid {
   public rotateRover(): void {
     switch (this.rover.getPosition().direction) {
       case "N":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(-90deg)";
+        this.roverHtml!.style.transform = "rotate(-90deg)";
         break;
       case "E":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(0deg)";
+        this.roverHtml!.style.transform = "rotate(0deg)";
         break;
       case "S":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(90deg)";
+        this.roverHtml!.style.transform = "rotate(90deg)";
         break;
       case "W":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(180deg)";
+        this.roverHtml!.style.transform = "rotate(180deg)";
         break;
     }
   }
@@ -39,67 +35,92 @@ export class Grid {
       "src",
       "https://cdn-icons-png.flaticon.com/512/1/1122.png"
     );
+    this.rotateRover();
   }
 
-  public printRover(rover: Rover): void {
+  private setRoverPosition(): void {
+    document
+      .querySelector(
+        `#row_${this.rover.getPosition().y}-col_${this.rover.getPosition().x}`
+      )
+      ?.appendChild(this.roverHtml!);
+  }
+
+  public printRover(): void {
     if (this.roverHtml !== null) {
-      const transform = this.roverHtml.style.transform;
       this.roverHtml.remove();
-      this.buildRoverHtml();
-      document
-        .querySelector(
-          `#row_${rover.getPosition().y}-col_${rover.getPosition().x}`
-        )
-        ?.appendChild(this.roverHtml!);
-      this.roverHtml.style.transform = transform;
-    } else {
-      this.buildRoverHtml();
-      document
-        .querySelector(
-          `#row_${rover.getPosition().y}-col_${rover.getPosition().x}`
-        )
-        ?.appendChild(this.roverHtml!);
     }
+    this.buildRoverHtml();
+    this.rotateRover();
+    this.setRoverPosition();
   }
 
-  public printGrid(): void {
-    for (let i = -1; i < this.rover.getPlanete().getSize(); i++) {
+  private buildGridRow(): void {
+    for (
+      let rowIndex = -1;
+      rowIndex < this.rover.getPlanete().getSize();
+      rowIndex++
+    ) {
       const row = document.createElement("div");
-      row.setAttribute("id", `row_${i.toString()}`);
+      row.setAttribute("id", `row_${rowIndex.toString()}`);
       row.setAttribute("class", "row");
       if (this.grid !== undefined) {
         this.grid!.innerHTML += row.outerHTML;
       }
 
-      const selectedRow = document.querySelector<HTMLDivElement>(
-        `#row_${i.toString()}`
+      const currentRow = document.querySelector<HTMLDivElement>(
+        `#row_${rowIndex.toString()}`
       );
-      if (selectedRow !== undefined) {
-        for (let j = 0; j < this.rover.getPlanete().getSize(); j++) {
-          if (j === 0 && i !== -1) {
-            const rowIndexCell = document.createElement("div");
-            rowIndexCell.setAttribute("id", `row_${i.toString()}_index`);
-            rowIndexCell.setAttribute("class", "row-index");
-            rowIndexCell!.innerText = i.toString();
-            if (selectedRow !== undefined) {
-              selectedRow!.innerHTML += rowIndexCell.outerHTML;
-            }
-          }
-          if (i === -1) {
-            const colIndexCell = document.createElement("div");
-            colIndexCell.setAttribute("id", `col_${j.toString()}_index`);
-            colIndexCell.setAttribute("class", "col-index");
-            colIndexCell!.innerText = j.toString();
+      this.buildGridCell(currentRow, rowIndex);
+    }
+  }
 
-            selectedRow!.innerHTML += colIndexCell.outerHTML;
-          } else {
-            var cell = document.createElement("div");
-            cell.setAttribute("id", `row_${i}-col_${j.toString()}`);
-            cell.setAttribute("class", "cell");
-            selectedRow!.innerHTML += cell.outerHTML;
-          }
+  private buildGridCell(
+    currentRow: HTMLDivElement | null,
+    rowIndex: number
+  ): void {
+    if (currentRow !== undefined) {
+      for (let j = 0; j < this.rover.getPlanete().getSize(); j++) {
+        if (j === 0 && rowIndex !== -1) {
+          this.buildGridRowIndex(currentRow, rowIndex);
+        }
+        if (rowIndex === -1) {
+          this.buildGridColIndex(currentRow, j);
+        } else {
+          var cell = document.createElement("div");
+          cell.setAttribute("id", `row_${rowIndex}-col_${j.toString()}`);
+          cell.setAttribute("class", "cell");
+          currentRow!.innerHTML += cell.outerHTML;
         }
       }
     }
+  }
+
+  private buildGridRowIndex(
+    currentRow: HTMLDivElement | null,
+    rowIndex: number
+  ): void {
+    const rowIndexCell = document.createElement("div");
+    rowIndexCell.setAttribute("id", `row_${rowIndex}_index`);
+    rowIndexCell.setAttribute("class", "row-index");
+    rowIndexCell!.innerText = rowIndex.toString();
+    if (currentRow !== undefined) {
+      currentRow!.innerHTML += rowIndexCell.outerHTML;
+    }
+  }
+
+  private buildGridColIndex(
+    currentRow: HTMLDivElement | null,
+    colIndex: number
+  ): void {
+    const colIndexCell = document.createElement("div");
+    colIndexCell.setAttribute("id", `col_${colIndex}_index`);
+    colIndexCell.setAttribute("class", "col-index");
+    colIndexCell!.innerText = colIndex.toString();
+    currentRow!.innerHTML += colIndexCell.outerHTML;
+  }
+
+  public printGrid(): void {
+    this.buildGridRow();
   }
 }
