@@ -14,20 +14,16 @@ export class Grid {
   public rotateRover(): void {
     switch (this.rover.getPosition().direction) {
       case "N":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(-90deg)";
+        this.roverHtml!.style.transform = "rotate(-90deg)";
         break;
       case "E":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(0deg)";
+        this.roverHtml!.style.transform = "rotate(0deg)";
         break;
       case "S":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(90deg)";
+        this.roverHtml!.style.transform = "rotate(90deg)";
         break;
       case "W":
-        document.querySelector<HTMLImageElement>("#rover")!.style.transform =
-          "rotate(180deg)";
+        this.roverHtml!.style.transform = "rotate(180deg)";
         break;
     }
   }
@@ -39,6 +35,7 @@ export class Grid {
       "src",
       "https://cdn-icons-png.flaticon.com/512/1/1122.png"
     );
+    this.rotateRover();
   }
 
   public printRover(rover: Rover): void {
