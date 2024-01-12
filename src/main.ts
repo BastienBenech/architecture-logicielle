@@ -15,14 +15,14 @@ export class App {
 
   run(): void {
     this.grid.printGrid();
-    this.grid.printRover(this.rover);
+    this.grid.printRover();
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
   }
 
   private handleKeyDown(event: KeyboardEvent) {
     this.rover.checkInputKey(event.key);
     this.grid.rotateRover();
-    this.grid.printRover(this.rover);
+    this.grid.printRover();
   }
 }
 const planete = new Planete(10);
