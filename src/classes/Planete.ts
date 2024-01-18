@@ -1,11 +1,11 @@
-export class Planete {
-  private size: number = 10;
+import { IPlanete } from "../interfaces/IPlanete";
 
-  constructor(size: number) {
-    this.size = size;
-  }
+export class Planete implements IPlanete {
+  width: number;
+  height: number;
 
-  public getSize(): number {
-    return this.size;
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
   }
 }
