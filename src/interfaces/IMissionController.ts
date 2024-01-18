@@ -1,3 +1,3 @@
-interface IMissionController {
-    envoyerCommandeAuRover(commande: String): void;
+export interface IMissionController {
+  envoyerCommandeAuRover(commande: String): void;
 }
