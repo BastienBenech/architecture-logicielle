@@ -1,59 +1,105 @@
-// @ts-ignore
-import { Planete } from "./Planete.ts";
-import { Position } from "./Position.ts";
-import {
-  directionsBackward,
-  directionsForward,
-  directionsLeft,
-  directionsRight,
-} from "../enums/Orientations.ts";
+import { Direction } from "../enums/Direction";
+import { IRover } from "../interfaces/IRover";
+import { Planete } from "./Planete";
+import { Position } from "./Position";
+import { Coordonates } from "./Coordonates";
 
-const MOVEMENT_KEYS = ["ArrowUp", "ArrowDown"];
-const ROTATION_KEYS = ["ArrowLeft", "ArrowRight"];
-
-export class Rover {
-  private position: Position;
-  private planete: Planete;
+export class Rover implements IRover {
+  position: Position;
+  planete: Planete;
 
   constructor(position: Position, planete: Planete) {
     this.position = position;
     this.planete = planete;
   }
 
-  public checkInputKey(key: string) {
-    if (MOVEMENT_KEYS.includes(key)) this.move(key);
-    else if (ROTATION_KEYS.includes(key)) this.turn(key);
+  avancer() {
+    // Logique pour avancer avec une planète toroïdale
+    switch (this.position.direction) {
+      case Direction.Nord:
+        this.position.coordonates.y =
+          (this.position.coordonates.y + 1) % this.planete.height;
+        break;
+      case Direction.Sud:
+        this.position.coordonates.y =
+          (this.position.coordonates.y - 1 + this.planete.height) %
+          this.planete.height;
+        break;
+      case Direction.Est:
+        this.position.coordonates.x =
+          (this.position.coordonates.x + 1) % this.planete.width;
+        break;
+      case Direction.Ouest:
+        this.position.coordonates.x =
+          (this.position.coordonates.x - 1 + this.planete.width) %
+          this.planete.width;
+        break;
+    }
   }
 
-  private move(keyUp: string) {
-    const direction =
-      keyUp === "ArrowUp"
-        ? directionsForward[this.position.direction]
-        : directionsBackward[this.position.direction];
-
-    this.position.x =
-      (this.position.x + direction.x + this.planete.getSize()) %
-      this.planete.getSize();
-    this.position.y =
-      (this.position.y + direction.y + this.planete.getSize()) %
-      this.planete.getSize();
-
-    return this.getPosition();
+  reculer() {
+    // Logique pour reculer avec une planète toroïdale
+    switch (this.position.direction) {
+      case Direction.Nord:
+        this.position.coordonates.y =
+          (this.position.coordonates.y - 1 + this.planete.height) %
+          this.planete.height;
+        break;
+      case Direction.Sud:
+        this.position.coordonates.y =
+          (this.position.coordonates.y + 1) % this.planete.height;
+        break;
+      case Direction.Est:
+        this.position.coordonates.x =
+          (this.position.coordonates.x - 1 + this.planete.width) %
+          this.planete.width;
+        break;
+      case Direction.Ouest:
+        this.position.coordonates.x =
+          (this.position.coordonates.x + 1) % this.planete.width;
+        break;
+    }
   }
 
-  private turn(keyUp: string) {
-    keyUp === "ArrowLeft"
-      ? (this.position.direction = directionsLeft[this.position.direction])
-      : (this.position.direction = directionsRight[this.position.direction]);
-
-    return this.getPosition();
+  tournerGauche() {
+    switch (this.position.direction) {
+      case Direction.Nord:
+        this.position.direction = Direction.Ouest;
+        break;
+      case Direction.Sud:
+        this.position.direction = Direction.Est;
+        break;
+      case Direction.Est:
+        this.position.direction = Direction.Nord;
+        break;
+      case Direction.Ouest:
+        this.position.direction = Direction.Sud;
+        break;
+    }
   }
 
-  public getPosition(): Position {
-    return this.position;
+  tournerDroite() {
+    switch (this.position.direction) {
+      case Direction.Nord:
+        this.position.direction = Direction.Est;
+        break;
+      case Direction.Sud:
+        this.position.direction = Direction.Ouest;
+        break;
+      case Direction.Est:
+        this.position.direction = Direction.Sud;
+        break;
+      case Direction.Ouest:
+        this.position.direction = Direction.Nord;
+        break;
+    }
   }
 
-  public getPlanete(): Planete {
-    return this.planete;
+  getCoordonnees(): Coordonates {
+    return this.position.coordonates;
+  }
+
+  getDirection(): Direction {
+    return this.position.direction;
   }
 }

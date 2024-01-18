@@ -4,6 +4,9 @@
 .idea
 .idea/*
 
+dist/
+
 node_modules/
+build/
 
 yarn.lock
