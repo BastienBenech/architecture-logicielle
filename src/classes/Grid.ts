@@ -11,7 +11,7 @@ export class Grid {
     this.rover = rover;
   }
 
-  public rotateRover(): void {
+  public updateRoverDirection(): void {
     switch (this.rover.getPosition().direction) {
       case "N":
         document.querySelector<HTMLImageElement>("#rover")!.style.transform =

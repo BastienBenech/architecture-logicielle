@@ -21,7 +21,7 @@ export class App {
 
   private handleKeyDown(event: KeyboardEvent) {
     this.rover.checkInputKey(event.key);
-    this.grid.rotateRover();
+    this.grid.updateRoverDirection();
     this.grid.printRover(this.rover);
   }
 }
